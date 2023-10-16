@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-16"?>
+<BatchDataSyncConfig name="DXDF - Cinchy - DXDATA - Saved Queries" version="1.0.0" xmlns="http://www.cinchy.co">
+    <Parameters>
+        <Parameter name="filePath"/>
+        <Parameter name="dxdGuid"/>
+    </Parameters>
+    <DelimitedDataSource source="PATH" path="@filePath" delimiter="," textQualifier="&quot;" headerRowsToIgnore="0" encoding="UTF8" useHeaderRecord="true">
+        <Schema>
+            <Column name="API Result Format" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="CQL" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Description" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Domain" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Groups With Design Access" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Groups With Execute Access" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Icon" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Icon Colour" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Name" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Timeout" dataType="Number" isMandatory="false" validateData="false"/>
+            <Column name="Type" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Users With Design Access" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Users With Execute Access" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Sync GUID" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget reconcileData="true" domain="Cinchy" table="Saved Queries" suppressDuplicateErrors="false" degreeOfParallelism="1">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn="API Result Format" targetColumn="API Result Format"/>
+            <ColumnMapping sourceColumn="CQL" targetColumn="CQL"/>
+            <ColumnMapping sourceColumn="Description" targetColumn="Description"/>
+            <ColumnMapping sourceColumn="Domain" targetColumn="Domain" linkColumn="Name"/>
+            <ColumnMapping sourceColumn="Groups With Design Access" targetColumn="Groups With Design Access" linkColumn="Name"/>
+            <ColumnMapping sourceColumn="Groups With Execute Access" targetColumn="Groups With Execute Access" linkColumn="Name"/>
+            <ColumnMapping sourceColumn="Icon" targetColumn="Icon" linkColumn="CSS Class"/>
+            <ColumnMapping sourceColumn="Icon Colour" targetColumn="Icon Colour" linkColumn="Name"/>
+            <ColumnMapping sourceColumn="Name" targetColumn="Name"/>
+            <ColumnMapping sourceColumn="Timeout" targetColumn="Timeout"/>
+            <ColumnMapping sourceColumn="Type" targetColumn="Type"/>
+            <ColumnMapping sourceColumn="Sync GUID" targetColumn="Sync GUID"/>
+        </ColumnMappings>
+        <Filter>ISNULL([Sync GUID],'') LIKE '@dxdGuid_%'</Filter>
+        <SyncKey readonly="false">
+            <SyncKeyColumnReference name="Sync GUID"/>
+        </SyncKey>
+        <NewRecordBehaviour type="INSERT"/>
+        <DroppedRecordBehaviour type="DELETE"/>
+        <ChangedRecordBehaviour type="UPDATE"/>
+        <PostSyncScripts/>
+    </CinchyTableTarget>
+</BatchDataSyncConfig>
+

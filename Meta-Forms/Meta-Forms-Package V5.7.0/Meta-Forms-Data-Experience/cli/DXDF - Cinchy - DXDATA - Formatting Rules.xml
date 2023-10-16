@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-16"?>
+<BatchDataSyncConfig name="DXDF - Cinchy - DXDATA - Formatting Rules" version="1.0.0" xmlns="http://www.cinchy.co">
+    <Parameters>
+        <Parameter name="filePath"/>
+        <Parameter name="dxdGuid"/>
+    </Parameters>
+    <DelimitedDataSource source="PATH" path="@filePath" delimiter="," textQualifier="&quot;" headerRowsToIgnore="0" encoding="UTF8" useHeaderRecord="true">
+        <Schema>
+            <Column name="Highlight Color" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Highlight Columns" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Ordinal" dataType="Number" isMandatory="false" validateData="false"/>
+            <Column name="Row Condition" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Table" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Sync GUID" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget reconcileData="true" domain="Cinchy" table="Formatting Rules" suppressDuplicateErrors="false" degreeOfParallelism="1">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn="Highlight Color" targetColumn="Highlight Color" linkColumn="Hex Value"/>
+            <ColumnMapping sourceColumn="Highlight Columns" targetColumn="Highlight Columns" linkColumn="Full Name"/>
+            <ColumnMapping sourceColumn="Ordinal" targetColumn="Ordinal"/>
+            <ColumnMapping sourceColumn="Row Condition" targetColumn="Row Condition"/>
+            <ColumnMapping sourceColumn="Table" targetColumn="Table" linkColumn="Guid"/>
+            <ColumnMapping sourceColumn="Sync GUID" targetColumn="Sync GUID"/>
+        </ColumnMappings>
+        <Filter>ISNULL([Sync GUID],'') LIKE '@dxdGuid_%'</Filter>
+        <SyncKey readonly="false">
+            <SyncKeyColumnReference name="Sync GUID"/>
+        </SyncKey>
+        <NewRecordBehaviour type="INSERT"/>
+        <DroppedRecordBehaviour type="DELETE"/>
+        <ChangedRecordBehaviour type="UPDATE"/>
+        <PostSyncScripts/>
+    </CinchyTableTarget>
+</BatchDataSyncConfig>
+

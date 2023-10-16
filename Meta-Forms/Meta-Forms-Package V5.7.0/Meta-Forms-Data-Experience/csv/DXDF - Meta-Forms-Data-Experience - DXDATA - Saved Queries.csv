@@ -1,0 +1,90 @@
+API Result Format,CQL,Description,Domain,Groups With Design Access,Groups With Execute Access,Icon,Icon Colour,Name,Timeout,Type,Users With Design Access,Users With Execute Access,Sync GUID
+"CSV","SELECT
+	formId					= f.[Form ID],
+	formName				= f.[Name],
+	tableId					= f.[Table].[Cinchy Id],
+    tableName				= f.[Table].[Name],
+    tableUrl				= f.[Table Url],
+    domainName				= f.[Table].[Domain].[Name],
+    tableJson				= f.[Table].[Json],
+    formDisplayName			= f.[Display Name],
+	isAccordion				= f.[Is Accordion],
+	brand					= f.[Brand],
+    subTitleColumn			= f.[Lookup Label].[Name],
+	lookupFilter			= f.[Lookup Filter Condition],
+    createNewOptionFormId	= f.[Create New Option].[Form ID],
+	createNewOptionName		= f.[Create New Option].[Name]
+FROM 
+	[Cinchy Forms].[Forms] f
+WHERE 
+	f.[Deleted] IS NULL AND 
+    f.[Form ID] = @formId","","Cinchy Forms","","","fa fa-search","Red","Get Form MetaData",30,"Query (Approved Data Only)","","","935D22E4-09F2-4F0C-B949-59E7FB232496_6455B3D8-6318-4FD3-8C91-23DB3BE3692A"
+"CSV","SELECT
+	id				= fs.[Cinchy Id],
+	name			= fs.[Name],
+    columnsInRow	= fs.[Columns In Row],
+    sequence	 	= fs.[Sequence],
+    autoExpand		= fs.[Auto-Expand]
+FROM [Cinchy Forms].[Form Sections] fs
+WHERE 
+	fs.[Deleted] IS NULL AND 
+    fs.[Form].[Form ID]=@formId
+ORDER BY fs.[Sequence]","","Cinchy Forms","","","fa fa-search","Red","Get Form Sections Metadata",30,"Query (Approved Data Only)","","","935D22E4-09F2-4F0C-B949-59E7FB232496_5C3572C3-704C-4E7D-899E-1457F2D243D3"
+"CSV","WITH result(FormId,formLevel)
+AS
+(
+  SELECT DISTINCT
+      formId 		= ff.[Form Section].[Form].[Form ID],
+      formLevel		= 1
+  FROM [Cinchy Forms].[Form Fields] ff
+  WHERE ff.[Deleted] IS NULL
+)
+SELECT
+	doNotWrap				= ff.[Do Not Wrap],
+	sortChildTable			= ff.[Sort Child Form Table],
+	overrideMandatory		= ff.[Override Mandatory To Non Mandatory],
+	childFormParentId		= ff.[Child Form Parent ID],
+	childFormLinkId			= ff.[Child Form Link ID],
+	numberFormatter			= ff.[Number Display Format],
+	totalTextAreaRows		= ff.[Total Text Area Rows],
+	dropdownFilter			= ff.[Dropdown Column Filter],
+	childFormFilter			= ff.[Child Form Filter],
+	dataFormatType			= ff.[Data Format Type],
+	formId					= ff.[Form Section].[Form].[Form ID],
+	formSectionId			= ff.[Form Section].[Cinchy Id],
+	formSection				= ff.[Form Section].[Name],
+	formFieldId				= ff.[Cinchy Id],
+	formFieldName			= ff.[Name],
+	caption					= ff.[Caption],
+	childFormId				= ff.[Child Form].[Form ID],
+	displayColumn			= ff.[Child Form Fields To Display].[Cinchy Id],
+	linkFieldId				= ff.[Child Form Link Field].[Cinchy Id],
+	columnId				= ff.[Table Column].[Cinchy Id],
+	columnName				= ff.[Table Column].[Name],
+	columnType				= CASE WHEN ff.[Table Column].[Type] = 'Calculated' THEN ff.[Table Column].[Calculated Column Output Format] ELSE ff.[Table Column].[Type] END,
+	choiceOptions			= ff.[Table Column].[Choice Column Options CSV],
+	columnIsMandatory		= CASE WHEN ff.[Display Column] IS NOT NULL THEN CAST(0 AS BIT) ELSE ff.[Table Column].[Is Mandatory] END,
+	columnMaxLength			= CASE WHEN ff.[Table Column].[Type] = 'Calculated' THEN ff.[Table Column].[Calculated Column Field Length] ELSE ff.[Table Column].[Text Column Max Length] END,
+	linkTargetColumnId		= ff.[Table Column].[Link Column Target].[Cinchy Id],
+	linkTargetColumnName	= CASE WHEN ff.[Display Column] IS NULL THEN (ff.[Table Column].[Link Column Target].[Name]) ELSE (ff.[Display Column]) END,
+	fileNameColumn			= ff.[File Name Column],
+	linkTargetTableId		= ff.[Table Column].[Link Column Target].[Table].[Cinchy Id],
+    linkTargetTableName		= ff.[Table Column].[Link Column Target].[Table].[Name],
+    linkTableDomainName     = ff.[Table Column].[Link Column Target].[Table].[Domain].[Name],
+	viewOnly				= CASE WHEN ff.[Table Column].[Type] = 'Calculated' THEN CAST(1 as BIT) ELSE ff.[View Only] END,
+	isDisplayColumn			= CASE WHEN ff.[Display Column] IS NULL THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END,
+	attachmentUrl			= CASE WHEN ff.[Table Column].[Link Column Target] = 'Cinchy.Files.File Name' THEN CONCAT('/api/files/v1.0/',[Table Column].[Table].[Domain],'/',[Table Column].[Table].[Name],'/@cinchyid/',[Table Column].[Name],'?fileId=@fileid') ELSE '' END,
+	uploadUrl				= CASE WHEN ff.[Table Column].[Link Column Target] = 'Cinchy.Files.File Name' THEN CONCAT('/api/files/v1.0/',[Table Column].[Table].[Domain],'/',[Table Column].[Table].[Name],'/@cinchyid/',[Table Column].[Name]) ELSE '' END,
+    flattenChildForm		= ff.[Flatten Child Form],
+    createNewOptionFormId	= ff.[Form Section].[Form].[Create New Option].[Form ID],
+    createNewOptionName		= ff.[Form Section].[Form].[Create New Option].[Name]
+FROM [Cinchy Forms].[Form Fields] ff
+INNER JOIN result r
+	ON ff.[Form Section].[Form].[Form ID] = r.FormId
+WHERE ff.[Deleted] IS NULL
+    AND ff.[Form Section].[Deleted] IS NULL
+    AND ff.[Table Column].[Deleted] IS NULL
+    AND ff.[Form Section].[Form].[Form ID] = @formId
+ORDER BY ff.[Form Section].[Sequence], ff.[Sequence]","","Cinchy Forms","","","fa fa-search","Red","Get Form Fields Metadata",30,"Query (Approved Data Only)","Administrator (admin)","","935D22E4-09F2-4F0C-B949-59E7FB232496_E182FDD6-F737-4526-B744-22F1F88FD8BA"
+
+

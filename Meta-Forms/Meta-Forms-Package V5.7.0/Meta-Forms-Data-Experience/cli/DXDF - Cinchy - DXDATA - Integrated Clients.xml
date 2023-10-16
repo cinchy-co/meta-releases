@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-16"?>
+<BatchDataSyncConfig name="DXDF - Cinchy - DXDATA - Integrated Clients" version="1.0.0" xmlns="http://www.cinchy.co">
+    <Parameters>
+        <Parameter name="filePath"/>
+        <Parameter name="dxdGuid"/>
+    </Parameters>
+    <DelimitedDataSource source="PATH" path="@filePath" delimiter="," textQualifier="&quot;" headerRowsToIgnore="0" encoding="UTF8" useHeaderRecord="true">
+        <Schema>
+            <Column name="Access Token Lifetime (Seconds)" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Client Id" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Client Name" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Enabled" dataType="Bool" isMandatory="false" validateData="false"/>
+            <Column name="Grant Type" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Permitted Login Redirect URLs" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Permitted Logout Redirect URLs" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Permitted Scopes" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Show Cinchy Login Screen" dataType="Bool" isMandatory="false" validateData="false"/>
+            <Column name="Sync GUID" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget reconcileData="true" domain="Cinchy" table="Integrated Clients" suppressDuplicateErrors="false" degreeOfParallelism="1">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn="Access Token Lifetime (Seconds)" targetColumn="Access Token Lifetime (Seconds)"/>
+            <ColumnMapping sourceColumn="Client Id" targetColumn="Client Id"/>
+            <ColumnMapping sourceColumn="Client Name" targetColumn="Client Name"/>
+            <ColumnMapping sourceColumn="Enabled" targetColumn="Enabled"/>
+            <ColumnMapping sourceColumn="Grant Type" targetColumn="Grant Type"/>
+            <ColumnMapping sourceColumn="Permitted Login Redirect URLs" targetColumn="Permitted Login Redirect URLs"/>
+            <ColumnMapping sourceColumn="Permitted Logout Redirect URLs" targetColumn="Permitted Logout Redirect URLs"/>
+            <ColumnMapping sourceColumn="Permitted Scopes" targetColumn="Permitted Scopes"/>
+            <ColumnMapping sourceColumn="Show Cinchy Login Screen" targetColumn="Show Cinchy Login Screen"/>
+            <ColumnMapping sourceColumn="Sync GUID" targetColumn="Sync GUID"/>
+        </ColumnMappings>
+        <Filter>ISNULL([Sync GUID],'') LIKE '@dxdGuid_%'</Filter>
+        <SyncKey readonly="false">
+            <SyncKeyColumnReference name="Sync GUID"/>
+        </SyncKey>
+        <NewRecordBehaviour type="INSERT"/>
+        <DroppedRecordBehaviour type="DELETE"/>
+        <ChangedRecordBehaviour type="UPDATE"/>
+        <PostSyncScripts/>
+    </CinchyTableTarget>
+</BatchDataSyncConfig>
+

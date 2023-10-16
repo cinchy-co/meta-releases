@@ -1,0 +1,7 @@
+Brand,Create New Option,Display Name,Domain,Form ID,Is Accordion,Lookup Filter Condition,Lookup Label,Name,Table,Table Url Override
+"Cinchy","","Child Form Designer","Cinchy Forms","childformdesigner","True","[Child Form] IS NOT NULL","Cinchy Forms.Form Fields.Form Field Key","Meta Form Child Form Fields","Cinchy Forms.Form Fields",""
+"Cinchy","","Form Designer","Cinchy Forms","formdesigner","True","","Cinchy Forms.Forms.Name","Meta Form","Cinchy Forms.Forms",""
+"Cinchy","","Form Field Designer","Cinchy Forms","formfielddesigner","True","[Child Form] IS NULL","Cinchy Forms.Form Fields.Form Field Key","Meta Form Fields","Cinchy Forms.Form Fields",""
+"Cinchy","","Form Section Designer","Cinchy Forms","formsectiondesigner","True","","Cinchy Forms.Form Sections.Form Section Key","Meta Form Sections","Cinchy Forms.Form Sections",""
+
+

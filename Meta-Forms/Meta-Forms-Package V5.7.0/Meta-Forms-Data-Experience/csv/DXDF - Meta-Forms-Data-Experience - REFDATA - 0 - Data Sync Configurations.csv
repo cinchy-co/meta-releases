@@ -1,0 +1,217 @@
+Config XML,Read Groups,Write Groups,Execute Groups,Admin Groups,Sync GUID
+"<?xml version=""1.0"" encoding=""utf-16""?>
+<BatchDataSyncConfig name=""DXDF - Meta-Forms-Data-Experience - REFDATA - 00000001 - Meta Form"" version=""1.0.0"" xmlns=""http://www.cinchy.co"">
+    <Parameters>
+        <Parameter name=""filePath"" />
+    </Parameters>
+    <DelimitedDataSource source=""PATH"" path=""@filePath"" delimiter="","" textQualifier=""&quot;"" headerRowsToIgnore=""0"" encoding=""UTF8"" useHeaderRecord=""true"">
+        <Schema>
+            <Column name=""Brand"" dataType=""Text"" />
+            <Column name=""Create New Option"" dataType=""Text"" />
+            <Column name=""Display Name"" dataType=""Text"" />
+            <Column name=""Domain"" dataType=""Text"" />
+            <Column name=""Form ID"" dataType=""Text"" />
+            <Column name=""Is Accordion"" dataType=""Bool"" />
+            <Column name=""Lookup Filter Condition"" dataType=""Text"" />
+            <Column name=""Lookup Label"" dataType=""Text"" />
+            <Column name=""Name"" dataType=""Text"" />
+            <Column name=""Table"" dataType=""Text"" />
+            <Column name=""Table Url Override"" dataType=""Text"" />
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget model="""" domain=""Cinchy Forms"" table=""Forms"" suppressDuplicateErrors=""false"">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn=""Brand"" targetColumn=""Brand"" />
+            <ColumnMapping sourceColumn=""Create New Option"" targetColumn=""Create New Option"" linkColumn=""Name"" />
+            <ColumnMapping sourceColumn=""Display Name"" targetColumn=""Display Name"" />
+            <ColumnMapping sourceColumn=""Domain"" targetColumn=""Domain"" linkColumn=""Name"" />
+            <ColumnMapping sourceColumn=""Form ID"" targetColumn=""Form ID"" />
+            <ColumnMapping sourceColumn=""Is Accordion"" targetColumn=""Is Accordion"" />
+            <ColumnMapping sourceColumn=""Lookup Filter Condition"" targetColumn=""Lookup Filter Condition"" />
+            <ColumnMapping sourceColumn=""Lookup Label"" targetColumn=""Lookup Label"" linkColumn=""Full Name"" />
+            <ColumnMapping sourceColumn=""Name"" targetColumn=""Name"" />
+            <ColumnMapping sourceColumn=""Table"" targetColumn=""Table"" linkColumn=""Full Name"" />
+            <ColumnMapping sourceColumn=""Table Url Override"" targetColumn=""Table Url Override"" />
+        </ColumnMappings>
+        <Filter>[Form ID] in ('formfielddesigner','childformdesigner','formsectiondesigner','formdesigner')</Filter>
+        <SyncKey>
+            <SyncKeyColumnReference name=""Form ID"" />
+        </SyncKey>
+        <NewRecordBehaviour type=""INSERT"" />
+        <ChangedRecordBehaviour type=""UPDATE"" />
+        <DroppedRecordBehaviour type=""IGNORE"" />
+    </CinchyTableTarget>
+</BatchDataSyncConfig>
+",,,,"All Users","935D22E4-09F2-4F0C-B949-59E7FB232496_REFDATA_DXDF - Meta-Forms-Data-Experience - REFDATA - 00000001 - Meta Form.xml"
+"<?xml version=""1.0"" encoding=""utf-16""?>
+<BatchDataSyncConfig name=""DXDF - Meta-Forms-Data-Experience - REFDATA - 00000002 - Meta Form Sections"" version=""1.0.0"" xmlns=""http://www.cinchy.co"">
+    <Parameters>
+        <Parameter name=""filePath"" />
+    </Parameters>
+    <DelimitedDataSource source=""PATH"" path=""@filePath"" delimiter="","" textQualifier=""&quot;"" headerRowsToIgnore=""0"" encoding=""UTF8"" useHeaderRecord=""true"">
+        <Schema>
+            <Column name=""Auto-Expand"" dataType=""Bool"" />
+            <Column name=""Columns In Row"" dataType=""Text"" />
+            <Column name=""Form"" dataType=""Text"" />
+            <Column name=""Name"" dataType=""Text"" />
+            <Column name=""Sequence"" dataType=""Number"" />
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget model="""" domain=""Cinchy Forms"" table=""Form Sections"" suppressDuplicateErrors=""false"">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn=""Auto-Expand"" targetColumn=""Auto-Expand"" />
+            <ColumnMapping sourceColumn=""Columns In Row"" targetColumn=""Columns In Row"" />
+            <ColumnMapping sourceColumn=""Form"" targetColumn=""Form"" linkColumn=""Name"" />
+            <ColumnMapping sourceColumn=""Name"" targetColumn=""Name"" />
+            <ColumnMapping sourceColumn=""Sequence"" targetColumn=""Sequence"" />
+        </ColumnMappings>
+        <Filter>[Form].[Form ID] in ('formfielddesigner','childformdesigner','formsectiondesigner','formdesigner')</Filter>
+        <SyncKey>
+            <SyncKeyColumnReference name=""Name"" />
+            <SyncKeyColumnReference name=""Sequence"" />
+            <SyncKeyColumnReference name=""Form"" />
+        </SyncKey>
+        <NewRecordBehaviour type=""INSERT"" />
+        <ChangedRecordBehaviour type=""UPDATE"" />
+        <DroppedRecordBehaviour type=""IGNORE"" />
+    </CinchyTableTarget>
+</BatchDataSyncConfig>
+",,,,"All Users","935D22E4-09F2-4F0C-B949-59E7FB232496_REFDATA_DXDF - Meta-Forms-Data-Experience - REFDATA - 00000002 - Meta Form Sections.xml"
+"<?xml version=""1.0"" encoding=""utf-16""?>
+<BatchDataSyncConfig name=""DXDF - Meta-Forms-Data-Experience - REFDATA - 00000003 - Meta Form Fields"" version=""1.0.0"" xmlns=""http://www.cinchy.co"">
+    <Parameters>
+        <Parameter name=""filePath"" />
+    </Parameters>
+    <DelimitedDataSource source=""PATH"" path=""@filePath"" delimiter="","" textQualifier=""&quot;"" headerRowsToIgnore=""0"" encoding=""UTF8"" useHeaderRecord=""true"">
+        <Schema>
+            <Column name=""Caption Override"" dataType=""Text"" />
+            <Column name=""Child Form"" dataType=""Text"" />
+            <Column name=""Child Form Fields To Display"" dataType=""Text"" />
+            <Column name=""Child Form Filter"" dataType=""Text"" />
+            <Column name=""Child Form Link Field"" dataType=""Text"" />
+            <Column name=""Child Form Link ID"" dataType=""Text"" />
+            <Column name=""Child Form Parent ID"" dataType=""Text"" />
+            <Column name=""Data Format Type"" dataType=""Text"" />
+            <Column name=""Display Column"" dataType=""Text"" />
+            <Column name=""Do Not Wrap"" dataType=""Bool"" />
+            <Column name=""Dropdown Column Filter"" dataType=""Text"" />
+            <Column name=""File Name Column"" dataType=""Text"" />
+            <Column name=""Flatten Child Form"" dataType=""Bool"" />
+            <Column name=""Force As Optional"" dataType=""Bool"" />
+            <Column name=""Form Section"" dataType=""Text"" />
+            <Column name=""Name Override"" dataType=""Text"" />
+            <Column name=""Number Display Format Override"" dataType=""Text"" />
+            <Column name=""Sequence Override"" dataType=""Number"" />
+            <Column name=""Sort Child Form Table"" dataType=""Text"" />
+            <Column name=""Table Column"" dataType=""Text"" />
+            <Column name=""Total Text Area Rows"" dataType=""Number"" />
+            <Column name=""View Only"" dataType=""Bool"" />
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget model="""" domain=""Cinchy Forms"" table=""Form Fields"" suppressDuplicateErrors=""false"">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn=""Caption Override"" targetColumn=""Caption Override"" />
+            <ColumnMapping sourceColumn=""Child Form"" targetColumn=""Child Form"" linkColumn=""Name"" />
+            <ColumnMapping sourceColumn=""Child Form Fields To Display"" targetColumn=""Child Form Fields To Display"" linkColumn=""Form Field Key"" />
+            <ColumnMapping sourceColumn=""Child Form Filter"" targetColumn=""Child Form Filter"" />
+            <ColumnMapping sourceColumn=""Child Form Link Field"" targetColumn=""Child Form Link Field"" linkColumn=""Form Field Key"" />
+            <ColumnMapping sourceColumn=""Child Form Link ID"" targetColumn=""Child Form Link ID"" />
+            <ColumnMapping sourceColumn=""Child Form Parent ID"" targetColumn=""Child Form Parent ID"" />
+            <ColumnMapping sourceColumn=""Data Format Type"" targetColumn=""Data Format Type"" />
+            <ColumnMapping sourceColumn=""Display Column"" targetColumn=""Display Column"" />
+            <ColumnMapping sourceColumn=""Do Not Wrap"" targetColumn=""Do Not Wrap"" />
+            <ColumnMapping sourceColumn=""Dropdown Column Filter"" targetColumn=""Dropdown Column Filter"" />
+            <ColumnMapping sourceColumn=""File Name Column"" targetColumn=""File Name Column"" linkColumn=""Full Name"" />
+            <ColumnMapping sourceColumn=""Flatten Child Form"" targetColumn=""Flatten Child Form"" />
+            <ColumnMapping sourceColumn=""Force As Optional"" targetColumn=""Force As Optional"" />
+            <ColumnMapping sourceColumn=""Form Section"" targetColumn=""Form Section"" linkColumn=""Form Section Key"" />
+            <ColumnMapping sourceColumn=""Name Override"" targetColumn=""Name Override"" />
+            <ColumnMapping sourceColumn=""Number Display Format Override"" targetColumn=""Number Display Format Override"" />
+            <ColumnMapping sourceColumn=""Sequence Override"" targetColumn=""Sequence Override"" />
+            <ColumnMapping sourceColumn=""Sort Child Form Table"" targetColumn=""Sort Child Form Table"" />
+            <ColumnMapping sourceColumn=""Table Column"" targetColumn=""Table Column"" linkColumn=""Full Name"" />
+            <ColumnMapping sourceColumn=""Total Text Area Rows"" targetColumn=""Total Text Area Rows"" />
+            <ColumnMapping sourceColumn=""View Only"" targetColumn=""View Only"" />
+        </ColumnMappings>
+        <Filter>[Child Form] IS NULL AND [Form Section].[Form].[Form ID] in ('formfielddesigner','childformdesigner','formsectiondesigner','formdesigner')</Filter>
+        <SyncKey>
+            <SyncKeyColumnReference name=""Name Override"" />
+            <SyncKeyColumnReference name=""Form Section"" />
+            <SyncKeyColumnReference name=""Table Column"" />
+        </SyncKey>
+        <NewRecordBehaviour type=""INSERT"" />
+        <ChangedRecordBehaviour type=""UPDATE"" />
+        <DroppedRecordBehaviour type=""IGNORE"" />
+    </CinchyTableTarget>
+</BatchDataSyncConfig>
+",,,,"All Users","935D22E4-09F2-4F0C-B949-59E7FB232496_REFDATA_DXDF - Meta-Forms-Data-Experience - REFDATA - 00000003 - Meta Form Fields.xml"
+"<?xml version=""1.0"" encoding=""utf-16""?>
+<BatchDataSyncConfig name=""DXDF - Meta-Forms-Data-Experience - REFDATA - 00000004 - Meta Form Child Fields"" version=""1.0.0"" xmlns=""http://www.cinchy.co"">
+    <Parameters>
+        <Parameter name=""filePath"" />
+    </Parameters>
+    <DelimitedDataSource source=""PATH"" path=""@filePath"" delimiter="","" textQualifier=""&quot;"" headerRowsToIgnore=""0"" encoding=""UTF8"" useHeaderRecord=""true"">
+        <Schema>
+            <Column name=""Caption Override"" dataType=""Text"" />
+            <Column name=""Child Form"" dataType=""Text"" />
+            <Column name=""Child Form Fields To Display"" dataType=""Text"" />
+            <Column name=""Child Form Filter"" dataType=""Text"" />
+            <Column name=""Child Form Link Field"" dataType=""Text"" />
+            <Column name=""Child Form Link ID"" dataType=""Text"" />
+            <Column name=""Child Form Parent ID"" dataType=""Text"" />
+            <Column name=""Data Format Type"" dataType=""Text"" />
+            <Column name=""Display Column"" dataType=""Text"" />
+            <Column name=""Do Not Wrap"" dataType=""Bool"" />
+            <Column name=""Dropdown Column Filter"" dataType=""Text"" />
+            <Column name=""File Name Column"" dataType=""Text"" />
+            <Column name=""Flatten Child Form"" dataType=""Bool"" />
+            <Column name=""Force As Optional"" dataType=""Bool"" />
+            <Column name=""Form Section"" dataType=""Text"" />
+            <Column name=""Name Override"" dataType=""Text"" />
+            <Column name=""Number Display Format Override"" dataType=""Text"" />
+            <Column name=""Sequence Override"" dataType=""Number"" />
+            <Column name=""Sort Child Form Table"" dataType=""Text"" />
+            <Column name=""Table Column"" dataType=""Text"" />
+            <Column name=""Total Text Area Rows"" dataType=""Number"" />
+            <Column name=""View Only"" dataType=""Bool"" />
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget model="""" domain=""Cinchy Forms"" table=""Form Fields"" suppressDuplicateErrors=""false"">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn=""Caption Override"" targetColumn=""Caption Override"" />
+            <ColumnMapping sourceColumn=""Child Form"" targetColumn=""Child Form"" linkColumn=""Name"" />
+            <ColumnMapping sourceColumn=""Child Form Fields To Display"" targetColumn=""Child Form Fields To Display"" linkColumn=""Form Field Key"" />
+            <ColumnMapping sourceColumn=""Child Form Filter"" targetColumn=""Child Form Filter"" />
+            <ColumnMapping sourceColumn=""Child Form Link Field"" targetColumn=""Child Form Link Field"" linkColumn=""Form Field Key"" />
+            <ColumnMapping sourceColumn=""Child Form Link ID"" targetColumn=""Child Form Link ID"" />
+            <ColumnMapping sourceColumn=""Child Form Parent ID"" targetColumn=""Child Form Parent ID"" />
+            <ColumnMapping sourceColumn=""Data Format Type"" targetColumn=""Data Format Type"" />
+            <ColumnMapping sourceColumn=""Display Column"" targetColumn=""Display Column"" />
+            <ColumnMapping sourceColumn=""Do Not Wrap"" targetColumn=""Do Not Wrap"" />
+            <ColumnMapping sourceColumn=""Dropdown Column Filter"" targetColumn=""Dropdown Column Filter"" />
+            <ColumnMapping sourceColumn=""File Name Column"" targetColumn=""File Name Column"" linkColumn=""Full Name"" />
+            <ColumnMapping sourceColumn=""Flatten Child Form"" targetColumn=""Flatten Child Form"" />
+            <ColumnMapping sourceColumn=""Force As Optional"" targetColumn=""Force As Optional"" />
+            <ColumnMapping sourceColumn=""Form Section"" targetColumn=""Form Section"" linkColumn=""Form Section Key"" />
+            <ColumnMapping sourceColumn=""Name Override"" targetColumn=""Name Override"" />
+            <ColumnMapping sourceColumn=""Number Display Format Override"" targetColumn=""Number Display Format Override"" />
+            <ColumnMapping sourceColumn=""Sequence Override"" targetColumn=""Sequence Override"" />
+            <ColumnMapping sourceColumn=""Sort Child Form Table"" targetColumn=""Sort Child Form Table"" />
+            <ColumnMapping sourceColumn=""Table Column"" targetColumn=""Table Column"" linkColumn=""Full Name"" />
+            <ColumnMapping sourceColumn=""Total Text Area Rows"" targetColumn=""Total Text Area Rows"" />
+            <ColumnMapping sourceColumn=""View Only"" targetColumn=""View Only"" />
+        </ColumnMappings>
+        <Filter>[Child Form] IS NOT NULL AND [Form Section].[Form].[Form ID] in ('formfielddesigner','childformdesigner','formsectiondesigner','formdesigner')</Filter>
+        <SyncKey>
+            <SyncKeyColumnReference name=""Name Override"" />
+            <SyncKeyColumnReference name=""Form Section"" />
+            <SyncKeyColumnReference name=""Table Column"" />
+        </SyncKey>
+        <NewRecordBehaviour type=""INSERT"" />
+        <ChangedRecordBehaviour type=""UPDATE"" />
+        <DroppedRecordBehaviour type=""IGNORE"" />
+    </CinchyTableTarget>
+</BatchDataSyncConfig>
+",,,,"All Users","935D22E4-09F2-4F0C-B949-59E7FB232496_REFDATA_DXDF - Meta-Forms-Data-Experience - REFDATA - 00000004 - Meta Form Child Fields.xml"
+
+

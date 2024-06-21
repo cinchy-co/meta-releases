@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-16"?>
+<BatchDataSyncConfig name="DXDF - Cinchy - DXDATA - View Columns" version="1.0.0" xmlns="http://www.cinchy.co">
+    <Parameters>
+        <Parameter name="filePath"/>
+        <Parameter name="dxdGuid"/>
+    </Parameters>
+    <DelimitedDataSource source="PATH" path="@filePath" delimiter="," textQualifier="&quot;" headerRowsToIgnore="0" encoding="UTF8" useHeaderRecord="true">
+        <Schema>
+            <Column name="Aggregate Operation" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Column" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Group By Ordinal" dataType="Number" isMandatory="false" validateData="false"/>
+            <Column name="Ordinal" dataType="Number" isMandatory="false" validateData="false"/>
+            <Column name="Sort Ascending" dataType="Bool" isMandatory="false" validateData="false"/>
+            <Column name="Sort Ordinal" dataType="Number" isMandatory="false" validateData="false"/>
+            <Column name="View" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Sync GUID" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget reconcileData="true" domain="Cinchy" table="View Columns" suppressDuplicateErrors="false" degreeOfParallelism="1">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn="Aggregate Operation" targetColumn="Aggregate Operation"/>
+            <ColumnMapping sourceColumn="Column" targetColumn="Column" linkColumn="Full Name"/>
+            <ColumnMapping sourceColumn="Group By Ordinal" targetColumn="Group By Ordinal"/>
+            <ColumnMapping sourceColumn="Ordinal" targetColumn="Ordinal"/>
+            <ColumnMapping sourceColumn="Sort Ascending" targetColumn="Sort Ascending"/>
+            <ColumnMapping sourceColumn="Sort Ordinal" targetColumn="Sort Ordinal"/>
+            <ColumnMapping sourceColumn="View" targetColumn="View" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Sync GUID" targetColumn="Sync GUID"/>
+        </ColumnMappings>
+        <Filter>ISNULL([Sync GUID],'') LIKE '@dxdGuid_%'</Filter>
+        <SyncKey readonly="false">
+            <SyncKeyColumnReference name="Sync GUID"/>
+        </SyncKey>
+        <NewRecordBehaviour type="INSERT"/>
+        <DroppedRecordBehaviour type="DELETE"/>
+        <ChangedRecordBehaviour type="UPDATE"/>
+        <PostSyncScripts>
+            <PostSyncScript name="Recalculate Renamed Table View Columns" timeout="500">
+                <CQL>
+          UPDATE vc
+          SET
+            vc.[Sync GUID] = vc.[Sync GUID]
+          FROM [Cinchy].[Cinchy].[View Columns] vc
+          WHERE
+            vc.[Deleted] IS NULL
+            AND vc.[Display Name] != CONCAT(vc.[View].[Display Name], ': ', vc.[Column].[Full Name])
+        </CQL>
+            </PostSyncScript>
+        </PostSyncScripts>
+    </CinchyTableTarget>
+</BatchDataSyncConfig>

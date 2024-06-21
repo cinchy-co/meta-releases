@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-16"?>
+<BatchDataSyncConfig name="DXDF - Cinchy - DXDATA - Views" version="1.0.0" xmlns="http://www.cinchy.co">
+    <Parameters>
+        <Parameter name="filePath"/>
+        <Parameter name="dxdGuid"/>
+    </Parameters>
+    <DelimitedDataSource source="PATH" path="@filePath" delimiter="," textQualifier="&quot;" headerRowsToIgnore="0" encoding="UTF8" useHeaderRecord="true">
+        <Schema>
+            <Column name="Filter Criteria" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Groups With View Access" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Is Default" dataType="Bool" isMandatory="false" validateData="false"/>
+            <Column name="Json" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Name" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Table" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Users With View Access" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Sync GUID" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget reconcileData="true" domain="Cinchy" table="Views" suppressDuplicateErrors="false" degreeOfParallelism="1">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn="Filter Criteria" targetColumn="Filter Criteria"/>
+            <ColumnMapping sourceColumn="Groups With View Access" targetColumn="Groups With View Access" linkColumn="Name"/>
+            <ColumnMapping sourceColumn="Is Default" targetColumn="Is Default"/>
+            <ColumnMapping sourceColumn="Json" targetColumn="Json"/>
+            <ColumnMapping sourceColumn="Name" targetColumn="Name"/>
+            <ColumnMapping sourceColumn="Table" targetColumn="Table" linkColumn="Guid"/>
+            <ColumnMapping sourceColumn="Sync GUID" targetColumn="Sync GUID"/>
+        </ColumnMappings>
+        <Filter>ISNULL([Sync GUID],'') LIKE '@dxdGuid_%'</Filter>
+        <SyncKey readonly="false">
+            <SyncKeyColumnReference name="Sync GUID"/>
+        </SyncKey>
+        <NewRecordBehaviour type="INSERT"/>
+        <DroppedRecordBehaviour type="DELETE"/>
+        <ChangedRecordBehaviour type="UPDATE"/>
+        <PostSyncScripts>
+            <PostSyncScript name="Recalculate Renamed Table Views" timeout="500">
+                <CQL>
+          UPDATE v
+          SET
+            v.[Sync GUID] = v.[Sync GUID]
+          FROM [Cinchy].[Cinchy].[Views] v
+          WHERE
+            v.[Deleted] IS NULL
+            AND v.[Display Name] != CONCAT(v.[Name], ' (', v.[Table].[Full Name], ')')
+        </CQL>
+            </PostSyncScript>
+        </PostSyncScripts>
+    </CinchyTableTarget>
+</BatchDataSyncConfig>

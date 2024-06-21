@@ -1,0 +1,5 @@
+Application Url,Description,Domain,Groups,Icon,Icon Colour,Integrated Client,Name,Target Window,Users,Sync GUID
+"https://dev.cinchy.net/dxdev-mssql-1/metaforms","","Cinchy Forms","All Users","fa fa-edit","Grey","cinchy_meta_forms","Editor","Existing Window (Embedded)","","935D22E4-09F2-4F0C-B949-59E7FB232496_33A53628-E4DD-46A3-A839-BA4EA82B18EF"
+"https://dev.cinchy.net/dxdev-mssql-1/apps/integrated?appid=2&formid=formdesigner&rowid=null","","Cinchy Forms","","fa fa-edit","Grey","","Form Designer","Existing Window (Redirect)","","935D22E4-09F2-4F0C-B949-59E7FB232496_DFE73BCE-A541-455D-B6BC-0DFB3EC4723B"
+
+

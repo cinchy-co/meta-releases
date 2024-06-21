@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-16"?>
+<BatchDataSyncConfig name="DXDF - Cinchy - DXDATA - Listener Config" version="1.0.0" xmlns="http://www.cinchy.co">
+    <Parameters>
+        <Parameter name="filePath"/>
+        <Parameter name="dxdGuid"/>
+    </Parameters>
+    <DelimitedDataSource source="PATH" path="@filePath" delimiter="," textQualifier="&quot;" headerRowsToIgnore="0" encoding="UTF8" useHeaderRecord="true">
+        <Schema>
+            <Column name="Auto Offset Reset" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Connection Attributes" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Data Sync Config" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Event Connector Type" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Name" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Topic" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Sync GUID" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget reconcileData="true" domain="Cinchy" table="Listener Config" suppressDuplicateErrors="false" degreeOfParallelism="1">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn="Auto Offset Reset" targetColumn="Auto Offset Reset"/>
+            <ColumnMapping sourceColumn="Connection Attributes" targetColumn="Connection Attributes"/>
+            <ColumnMapping sourceColumn="Data Sync Config" targetColumn="Data Sync Config" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Event Connector Type" targetColumn="Event Connector Type"/>
+            <ColumnMapping sourceColumn="Name" targetColumn="Name"/>
+            <ColumnMapping sourceColumn="Topic" targetColumn="Topic"/>
+            <ColumnMapping sourceColumn="Sync GUID" targetColumn="Sync GUID"/>
+        </ColumnMappings>
+        <Filter>ISNULL([Sync GUID],'') LIKE '@dxdGuid_%'</Filter>
+        <SyncKey readonly="false">
+            <SyncKeyColumnReference name="Sync GUID"/>
+        </SyncKey>
+        <NewRecordBehaviour type="INSERT"/>
+        <DroppedRecordBehaviour type="DELETE"/>
+        <ChangedRecordBehaviour type="UPDATE"/>
+        <PostSyncScripts/>
+    </CinchyTableTarget>
+</BatchDataSyncConfig>

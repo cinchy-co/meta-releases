@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-16"?>
+<BatchDataSyncConfig name="DXDF - Cinchy - DXDATA - Data Experience Definitions" version="1.0.0" xmlns="http://www.cinchy.co">
+    <Parameters>
+        <Parameter name="filePath"/>
+        <Parameter name="dxdGuid"/>
+    </Parameters>
+    <DelimitedDataSource source="PATH" path="@filePath" delimiter="," textQualifier="&quot;" headerRowsToIgnore="0" encoding="UTF8" useHeaderRecord="true">
+        <Schema>
+            <Column name="Applets" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Data Sync Configurations" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Formatting Rules" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Groups" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Guid" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Integrated Clients" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Listener Configurations" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Literal Groups" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Models" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Name" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Post-install Scripts" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Pre-install Scripts" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Reference Data" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Saved Queries" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Secrets" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="System Colours" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Tables" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="User Defined Functions" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Views" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Webhooks" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Sync GUID" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget reconcileData="true" domain="Cinchy" table="Data Experience Definitions" suppressDuplicateErrors="false" degreeOfParallelism="1">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn="Applets" targetColumn="Applets" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Data Sync Configurations" targetColumn="Data Sync Configurations" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Formatting Rules" targetColumn="Formatting Rules" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Groups" targetColumn="Groups" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Integrated Clients" targetColumn="Integrated Clients" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Listener Configurations" targetColumn="Listener Configurations" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Literal Groups" targetColumn="Literal Groups" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Models" targetColumn="Models" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Name" targetColumn="Name"/>
+            <ColumnMapping sourceColumn="Reference Data" targetColumn="Reference Data" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Saved Queries" targetColumn="Saved Queries" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Secrets" targetColumn="Secrets" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Sync GUID" targetColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="System Colours" targetColumn="System Colours" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Tables" targetColumn="Tables" linkColumn="Guid"/>
+            <ColumnMapping sourceColumn="User Defined Functions" targetColumn="User Defined Functions" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Views" targetColumn="Views" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Webhooks" targetColumn="Webhooks" linkColumn="Sync GUID"/>
+        </ColumnMappings>
+        <Filter>ISNULL([Sync GUID],[Guid]) = '@dxdGuid'</Filter>
+        <SyncKey readonly="false">
+            <SyncKeyColumnReference name="Sync GUID"/>
+        </SyncKey>
+        <NewRecordBehaviour type="INSERT"/>
+        <DroppedRecordBehaviour type="DELETE"/>
+        <ChangedRecordBehaviour type="UPDATE"/>
+        <PostSyncScripts/>
+    </CinchyTableTarget>
+</BatchDataSyncConfig>

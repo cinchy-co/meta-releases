@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-16"?>
+<BatchDataSyncConfig name="DXDF - Cinchy - DXDATA - Data Experience Releases" version="1.0.0" xmlns="http://www.cinchy.co">
+    <Parameters>
+        <Parameter name="filePath"/>
+        <Parameter name="dxdGuid"/>
+    </Parameters>
+    <DelimitedDataSource source="PATH" path="@filePath" delimiter="," textQualifier="&quot;" headerRowsToIgnore="0" encoding="UTF8" useHeaderRecord="true">
+        <Schema>
+            <Column name="Data Experience" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+            <Column name="Release Version" dataType="Text" trimWhitespace="true" isMandatory="false" validateData="false"/>
+        </Schema>
+    </DelimitedDataSource>
+    <CinchyTableTarget reconcileData="true" domain="Cinchy" table="Data Experience Releases" suppressDuplicateErrors="false" degreeOfParallelism="1">
+        <ColumnMappings>
+            <ColumnMapping sourceColumn="Data Experience" targetColumn="Data Experience" linkColumn="Sync GUID"/>
+            <ColumnMapping sourceColumn="Release Version" targetColumn="Release Version"/>
+        </ColumnMappings>
+        <Filter>[Data Experience].[Sync GUID] = '@dxdGuid'</Filter>
+        <SyncKey readonly="false">
+            <SyncKeyColumnReference name="Data Experience"/>
+            <SyncKeyColumnReference name="Release Version"/>
+        </SyncKey>
+        <NewRecordBehaviour type="INSERT"/>
+        <DroppedRecordBehaviour type="DELETE"/>
+        <ChangedRecordBehaviour type="UPDATE"/>
+        <PostSyncScripts/>
+    </CinchyTableTarget>
+</BatchDataSyncConfig>
